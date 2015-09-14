@@ -43,7 +43,6 @@ def load_forecast(key, lat, lng, time=None, units="auto", lazy=False,
 
     if options:
         baseURL = "%s&%s" % (url, "&".join(options))
-        print baseURL
 
     return manual(baseURL, callback=callback)
 
@@ -69,7 +68,7 @@ def get_forecast(requestURL):
     json = forecastio_reponse.json()
     headers = forecastio_reponse.headers
 
-    return Forecast(json, forecastio_reponse, headers)
+    return Forecast(json, forecastio_reponse, headers, requestURL)
 
 
 def load_async(url, callback):

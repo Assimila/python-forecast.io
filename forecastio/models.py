@@ -5,10 +5,11 @@ import requests
 
 class Forecast(UnicodeMixin):
 
-    def __init__(self, data, response, headers):
+    def __init__(self, data, response, headers, url):
         self.response = response
         self.http_headers = headers
         self.json = data
+        self.url = url
 
         self._alerts = []
         for alertJSON in self.json.get('alerts', []):
