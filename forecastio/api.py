@@ -4,8 +4,8 @@ import threading
 from forecastio.models import Forecast
 
 
-def load_forecast(key, lat, lng, time=None, units="auto", lazy=False,
-                  callback=None):
+def load_forecast(key, lat, lng, time=None, units="auto", lazy=False, 
+                  options=None, callback=None):
     """
         This function builds the request url and loads some or all of the
         needed json depending on lazy is True
@@ -20,6 +20,8 @@ def load_forecast(key, lat, lng, time=None, units="auto", lazy=False,
         lazy:   Defaults to false.  The function will only request the json
                 data as it is needed. Results in more requests, but
                 probably a faster response time (I haven't checked)
+        options:A list of strings for any additional options e.g. 
+                ["extend=daily", "lang=nl"]
     """
 
     if time is None:
@@ -37,6 +39,11 @@ def load_forecast(key, lat, lng, time=None, units="auto", lazy=False,
                                      'daily,alerts,flags')
     else:
         baseURL = url
+
+
+    if options:
+        baseURL = "%s&%s" % (url, "&".join(options))
+        print baseURL
 
     return manual(baseURL, callback=callback)
 
